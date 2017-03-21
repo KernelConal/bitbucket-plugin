@@ -87,6 +87,7 @@ public class BitbucketJobProbe {
     private boolean match(SCM scm, URIish url) {
         if (scm instanceof GitSCM) {
             for (RemoteConfig remoteConfig : ((GitSCM) scm).getRepositories()) {
+                remoteConfig = ((GitSCM) scm).getParamExpandedRepo(job.getCharacteristicEnvVars(), remoteConfig);
                 for (URIish urIish : remoteConfig.getURIs()) {
                     if (GitStatus.looselyMatches(urIish, url)) {
                         return true;
